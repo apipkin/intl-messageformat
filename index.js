@@ -329,7 +329,7 @@
             // relevant data need for each type of formatting.
             switch (type) {
                 case 'date':
-                    format = formats['date_' + part.format];
+                    format = formats['date_' + part.format] || formats[part.format];
                     formatPattern.push({
                         valueName: valueName,
                         format   : new Intl.DateTimeFormat(locales, format).format
@@ -337,7 +337,7 @@
                     break;
 
                 case 'time':
-                    format = formats['time_' + part.format];
+                    format = formats['time_' + part.format] || formats[part.format];
                     formatPattern.push({
                         valueName: valueName,
                         format   : new Intl.DateTimeFormat(locales, format).format
@@ -345,7 +345,7 @@
                     break;
 
                 case 'number':
-                    format = formats['number_' + part.format];
+                    format = formats['number_' + part.format] || formats[part.format];
                     formatPattern.push({
                         valueName: valueName,
                         format   : new Intl.NumberFormat(locales, format).format
