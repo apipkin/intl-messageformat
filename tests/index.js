@@ -451,6 +451,43 @@ describe('IntlMessageFormat', function () {
 
     });
 
+    describe('should work with custom formats', function () {
+        it('should parse with a custom date format', function () {
+            var msg = 'Yesterday was {date, date, mdY}.',
+                msgFmt = new IntlMessageFormat(msg, 'en', {
+                    mdY: { month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC' }
+                }),
+                m = msgFmt.format({
+                    date: new Date(2012, 11, 20, 12, 0, 0)
+                });
+
+            expect(m).to.equal('Yesterday was 12/20/2012.');
+        });
+        it('should parse with a custom time format', function () {
+            var msg = 'The meeting is at {time, time, hm}.',
+                msgFmt = new IntlMessageFormat(msg, 'en', {
+                    hm: { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: 'UTC' }
+                }),
+                m = msgFmt.format({
+                    time: new Date(2012, 11, 20, 12, 0, 0)
+                });
+
+            expect(m).to.equal('The meeting is at 12:00.');
+        });
+        it('should parse with a custom number format', function () {
+            var msg = 'The {product} costs {amount, number, euros}.',
+                msgFmt = new IntlMessageFormat(msg, 'en', {
+                    euros: { style: 'currency', currency: 'EUR'}
+                }),
+                m = msgFmt.format({
+                    product: 'couch',
+                    amount: 350.32
+                });
+
+            expect(m).to.equal('The couch costs €350.32.');
+        });
+    });
+
     describe('using an Array pattern', function () {
         it('should concatenate the Array', function () {
             var msgFmt, m;
